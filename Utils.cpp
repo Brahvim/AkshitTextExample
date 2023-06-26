@@ -5,6 +5,12 @@ void inline print(const PrintElementT p_toPrint) {
     std::cout << p_toPrint << std::endl;
 }
 
+template <typename T>
+void inline print(const T& p_container) {
+    for (const auto& item : p_container)
+        std::cout << item << std::endl;
+}
+
 // These functions require using "set notation" AKA "set syntax", id est, this!:
 // `printList({ "A", "B" });` (Notice the `{ }`!)
 

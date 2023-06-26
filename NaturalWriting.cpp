@@ -1,5 +1,4 @@
 #include "Header.h"
-#include <string>
 
 namespace Speed {
 
@@ -13,6 +12,8 @@ namespace Speed {
     namespace {
         struct ForeverUnusedInitializerStruct {
             ForeverUnusedInitializerStruct() {
+                // TODO: FIX THIS.
+                // print(std::vector<std::string>({ "A","B" }));
                 Speed::reset();
             }
 

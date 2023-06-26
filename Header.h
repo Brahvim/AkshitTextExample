@@ -1,12 +1,12 @@
 #pragma once
 
+#include <algorithm>
 #include <chrono>
 #include <string>
 #include <thread>
 #include <stdio.h>
 #include <sstream>
 #include <iostream>
-#include <algorithm>
 
 // Using macros may seem convenient, but it's bad for this purpose, since
 // I'll now have to include the required headers in each file.
@@ -40,6 +40,9 @@ namespace Speed {
 template <typename PrintElementT>
 void print(const PrintElementT);
 
+template <typename PrintElementT>
+void print(const PrintElementT);
+
 template <typename PrintElementT, typename... VarArgs>
 void print(const PrintElementT, const VarArgs...);
 
@@ -68,12 +71,35 @@ std::string inline convertToString(const PrintElementT& p_element) {
     // return std::stringstream{} << p_element;
 }
 
-void convertToLowercase(const std::string& p_str);
+std::string convertToLowercase(const std::string& p_str);
 
-void inline convertToLowercase(const std::string& p_str) {
+/**
+ * @param p_str the string.
+ * @return the same string. Feel free to ignore this return value!
+ */
+std::string inline convertToLowercase(std::string& p_str) {
     // https://stackoverflow.com/q/313970/
-        // This is bad, because using another language or encoding breaks it!
-        // Better, use: https://stackoverflow.com/a/24063783/
+    // This is bad, because using another language or encoding breaks it!
+    // Better, use: https://stackoverflow.com/a/24063783/
     std::transform(p_str.begin(), p_str.end(), p_str.begin(),
         [](unsigned char c) { return std::tolower(c); }); // Nice use of lambdas here!
+    return p_str;
+}
+
+std::initializer_list<std::string> convertToLowercase(std::initializer_list<std::string>&);
+
+std::initializer_list<const char*> inline convertToLowercase(
+    const std::initializer_list<const char*>& p_strList) {
+    for (auto s : p_strList)
+        convertToLowercase(s);
+
+    return p_strList;
+}
+
+std::initializer_list<std::string> inline convertToLowercase(
+    std::initializer_list<std::string>& p_strList) {
+    for (std::string s : p_strList)
+        convertToLowercase(s);
+
+    return p_strList;
 }

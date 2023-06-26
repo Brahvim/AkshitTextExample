@@ -4,8 +4,11 @@
 //  (I'm using this `namespace` like a `class`! 🤣)
 namespace VendingMachine {
 
-    const auto DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Brand New Milkshake" };
-    const auto DRINKS_LIST_LOWERCASE = convertToLowerCase("a");
+    const auto DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Brand New Milkshake" },
+        DRINKS_LIST_LOWERCASE = { "water", "cola", "lemonade", "brand new milkshake" };
+
+    // C++ sucks. Forget this:
+    // const auto DRINKS_LIST_LOWERCASE = convertToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
 
     void welcome() {
         write("Hiya! This is a vending machine!");
@@ -33,9 +36,10 @@ namespace VendingMachine {
         // shorter and easier to edit, but *here we go!:*
 
         bool isAvailable;
-        for (const std::string s : VendingMachine::DRINKS_LIST_FORMATTED)
+        for (const std::string s : VendingMachine::DRINKS_LIST_LOWERCASE)
             if (s == chosenDrink) {
                 isAvailable = true;
+                chosenDrink = s;
                 break;
             }
 
@@ -44,11 +48,12 @@ namespace VendingMachine {
             return false;
         }
 
+        writeWithoutLine("Here is your ");
+        write(chosenDrink);
         return true;
     }
 
     void sayGoodbye() {
-        write("Here is your drink.");
         write("Thank you for using our vending machine!");
         write("Ba-bye, see you soon!");
     }
