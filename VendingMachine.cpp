@@ -1,4 +1,5 @@
 #include "Header.h"
+#include <algorithm>
 
 // I'm an OOP-guy, ..sorry-not-sorry!
 //  (I'm using this `namespace` like a `class`! 🤣)
@@ -20,21 +21,24 @@ namespace VendingMachine {
         std::getline(std::cin, chosenDrink);
         // print("You chose", chosenDrink, '!'); // "Debug Laag".
 
-        convertStringToLowerCase(chosenDrink);
+        // https://stackoverflow.com/q/313970/
+        // This is bad, because using another language or encoding breaks it!
+        // Better, use: https://stackoverflow.com/a/24063783/
+        std::transform(chosenDrink.begin(), chosenDrink.end(), chosenDrink.begin(),
+            [](unsigned char c) { return std::tolower(c); }); // Nice use of lambdas here!
 
         // I can think of so many ways to make this 
         // shorter and easier to edit, but *here we go!:*
 
         bool isAvailable;
-        for (const std::string s : VendingMachine::DRINKS_LIST) {
+        for (const std::string s : VendingMachine::DRINKS_LIST)
             if (s == chosenDrink) {
                 isAvailable = true;
                 break;
             }
-        }
 
         if (!isAvailable) {
-            write("Sorry, we don't seem to have that with us. Did you makea typo? Mind trying again?");
+            write("Sorry, we don't seem to have that with us. Did you make a typo? Mind trying again?");
             return false;
         }
 

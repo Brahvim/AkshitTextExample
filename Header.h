@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 #include <chrono>
 #include <thread>
@@ -11,9 +13,16 @@
 // #define MILLISECONDS(p_time) std::chrono::milliseconds(p_time) // ((p_time))
 // #define MAIN_THREAD_SLEEP(p_time) std::this_thread::sleep_for(p_time) // ((p_time))
 
-#pragma region // For `NaturalWriting.cpp`
-void sleep(const long);
-void write(std::string);
+#pragma region // For `NaturalWriting.cpp`.
+void sleep(const long); // Not passed by reference because `size_t` is larger than a `long`! Slow!
+
+void writeString(const std::string& p_str);
+
+template <typename PrintElementT>
+void write(const PrintElementT & p_element);
+
+template <typename PrintElementT>
+void writeWithoutLine(const PrintElementT & p_element);
 
 template <typename PrintElementT>
 void writeList(const std::initializer_list<PrintElementT>);
@@ -24,9 +33,7 @@ namespace Speed {
 };
 #pragma endregion
 
-#pragma region // For `Utils.cpp`
-void convertStringToLowerCase(const std::string&);
-
+#pragma region // For `Utils.cpp`.
 template <typename PrintElementT>
 void print(const PrintElementT);
 
@@ -39,3 +46,8 @@ void print(const PrintElementT, const VarArgs...);
 template <typename PrintElementT>
 void printList(const std::initializer_list<PrintElementT>);
 #pragma endregion
+
+template <typename PrintElementT>
+std::string inline convertToString(const PrintElementT& p_element);
+
+#include "ConvertToString.cpp"

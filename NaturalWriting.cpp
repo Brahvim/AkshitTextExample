@@ -1,4 +1,5 @@
 #include "Header.h"
+#include <string>
 
 namespace Speed {
 
@@ -45,25 +46,28 @@ namespace Speed {
 
 }
 
-/*
-int main(const int p_argCount, char const *p_arrArgValues[]) {
-    Speed::reset();
-    printf("Yo, I'm here simply waiting for you to press Enter.");
-    std::cin.ignore();
-    write("Hello, World!\a");
-}
-
-template <typename T>
-void print(T p_toOutput) {
-    std::cout << p_toOutput << '\n';
-}
-*/
-
 void sleep(const long p_time) {
     std::this_thread::sleep_for(std::chrono::milliseconds(p_time));
 }
 
-void write(const std::string p_str) {
+// template <typename PrintElementT, typename... VarArgs>
+// void write(const PrintElementT p_toPrint, const VarArgs... p_args) {
+//     writeImpl(p_toPrint);
+//     writeImpl(p_args...);
+// }
+
+template <typename PrintElementT>
+void write(const PrintElementT& p_element) {
+    writeWithoutLine(p_element);
+    std::cout << std::endl;
+}
+
+template <typename PrintElementT>
+void writeWithoutLine(const PrintElementT& p_element) {
+    writeString(convertToString(p_element));
+}
+
+void writeString(const std::string& p_str) {
     char c;
     const unsigned int length = p_str.length();
     for (unsigned int i = 0; i < length; i++) {
@@ -90,8 +94,6 @@ void write(const std::string p_str) {
             sleep(LETTER);
         }
     }
-
-    std::cout << '\n';
 }
 
 template <typename PrintElementT>
