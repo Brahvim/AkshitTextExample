@@ -8,7 +8,6 @@
         "unordered_map": "cpp",
         "vector": "cpp",
         "string_view": "cpp",
-        "chrono": "cpp",
-        "thread": "cpp"
+        "chrono": "cpp"
     }
 }
