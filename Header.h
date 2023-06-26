@@ -1,9 +1,12 @@
 #pragma once
 
-#include <stdio.h>
 #include <chrono>
+#include <string>
 #include <thread>
+#include <stdio.h>
+#include <sstream>
 #include <iostream>
+#include <algorithm>
 
 // Using macros may seem convenient, but it's bad for this purpose, since
 // I'll now have to include the required headers in each file.
@@ -48,7 +51,29 @@ void printList(const std::initializer_list<PrintElementT>);
 #pragma endregion
 
 // Compiler problems forced me to do this...
+// This took me HOURS to get placed. The compiler didn't understand where to refer to this from!:
+// Templated function problems, haha.
 template <typename PrintElementT>
-std::string inline convertToString(const PrintElementT& p_element);
+std::string inline convertToString(const PrintElementT& p_element) {
+    // Original code:
+    std::stringstream stream;
+    stream << p_element;
+    return stream.str();
 
-#include "ConvertToString.cpp"
+    // Shorter version:
+    // std::stringstream stream;
+    // return (stream << p_element).str();
+
+    // Shortest! (Broken!!!):
+    // return std::stringstream{} << p_element;
+}
+
+void convertToLowercase(const std::string& p_str);
+
+void inline convertToLowercase(const std::string& p_str) {
+    // https://stackoverflow.com/q/313970/
+        // This is bad, because using another language or encoding breaks it!
+        // Better, use: https://stackoverflow.com/a/24063783/
+    std::transform(p_str.begin(), p_str.end(), p_str.begin(),
+        [](unsigned char c) { return std::tolower(c); }); // Nice use of lambdas here!
+}

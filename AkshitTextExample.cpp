@@ -5,7 +5,6 @@
 int main(const int p_argCount, char const *p_argValues[]) {
     // MAIN_THREAD_SLEEP(MILLISECONDS(500));
     sleep(500);
-
     VendingMachine::welcome();
 
 prompt:
