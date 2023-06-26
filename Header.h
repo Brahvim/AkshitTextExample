@@ -47,6 +47,7 @@ template <typename PrintElementT>
 void printList(const std::initializer_list<PrintElementT>);
 #pragma endregion
 
+// Compiler problems forced me to do this...
 template <typename PrintElementT>
 std::string inline convertToString(const PrintElementT& p_element);
 
