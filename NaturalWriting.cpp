@@ -59,9 +59,9 @@ void print(T p_toOutput) {
 }
 */
 
-// void sleep(const long p_time) {
-//     std::this_thread::sleep_for(std::chrono::milliseconds(p_time));
-// }
+void sleep(const long p_time) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(p_time));
+}
 
 void write(const std::string p_str) {
     char c;
