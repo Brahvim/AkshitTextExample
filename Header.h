@@ -7,9 +7,9 @@
 // I'll now have to include the required headers in each file.
 // This increases the size of my program executable!
 // Using the function, `sleep(const long)` as declared below, instead, saves us.
-#define SECONDS(p_time) std::chrono::seconds(p_time) // (p_time))
-#define MILLISECONDS(p_time) std::chrono::milliseconds(p_time) // ((p_time))
-#define MAIN_THREAD_SLEEP(p_time) std::this_thread::sleep_for(p_time) // ((p_time))
+// #define SECONDS(p_time) std::chrono::seconds(p_time) // (p_time))
+// #define MILLISECONDS(p_time) std::chrono::milliseconds(p_time) // ((p_time))
+// #define MAIN_THREAD_SLEEP(p_time) std::this_thread::sleep_for(p_time) // ((p_time))
 
 #pragma region // For `NaturalWriting.cpp`
 void sleep(const long);

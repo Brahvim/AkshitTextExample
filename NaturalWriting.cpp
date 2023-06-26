@@ -78,20 +78,16 @@ void write(const std::string p_str) {
         // Sleep for some time, based on the character encountered:
         switch (c) {
         case ',':
-            // sleep(COMMA);
-            MAIN_THREAD_SLEEP(MILLISECONDS(COMMA));
+            sleep(COMMA);
             break;
         case '.':
-            // sleep(FULLSTOP);
-            MAIN_THREAD_SLEEP(MILLISECONDS(FULLSTOP));
+            sleep(FULLSTOP);
             break;
         case '!':
-            // sleep(EXCLAIM);
-            MAIN_THREAD_SLEEP(MILLISECONDS(EXCLAIM));
+            sleep(EXCLAIM);
             break;
         default:
-            // sleep(LETTER);
-            MAIN_THREAD_SLEEP(MILLISECONDS(LETTER));
+            sleep(LETTER);
         }
     }
 
