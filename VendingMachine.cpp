@@ -51,6 +51,4 @@ namespace VendingMachine {
         write("Ba-bye, see you soon!");
     }
 
-
-
 }

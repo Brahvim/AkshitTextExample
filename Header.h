@@ -35,6 +35,9 @@ namespace Speed {
 
 #pragma region // For `Utils.cpp`.
 template <typename PrintElementT>
+std::string inline convertToString(const PrintElementT& p_element);
+
+template <typename PrintElementT>
 void print(const PrintElementT);
 
 template <typename PrintElementT, typename... VarArgs>
@@ -46,8 +49,3 @@ void print(const PrintElementT, const VarArgs...);
 template <typename PrintElementT>
 void printList(const std::initializer_list<PrintElementT>);
 #pragma endregion
-
-template <typename PrintElementT>
-std::string inline convertToString(const PrintElementT& p_element);
-
-#include "ConvertToString.cpp"
