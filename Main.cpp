@@ -24,19 +24,18 @@ prompt:
 // I'm an OOP-guy, ..sorry-not-sorry!
 // (I'm using this `namespace` like a `class`! 🤣)
 
-
 namespace VendingMachine {
 
-    void welcome() {
+    void welcome(void) {
         writeln("Hiya! This is a vending machine!");
     }
 
-    void promptForDrink() {
+    void promptForDrink(void) {
         writeln("Choose your drink!:");
         writeList(VendingMachine::DRINKS_LIST_FORMATTED);
     }
 
-    bool checkDrinkInput() {
+    bool checkDrinkInput(void) {
         std::string chosenDrink;
         std::getline(std::cin, chosenDrink);
         // print("You chose", chosenDrink, '!'); // "Debug Laag".
@@ -70,7 +69,7 @@ namespace VendingMachine {
         return true;
     }
 
-    void sayGoodbye() {
+    void sayGoodbye(void) {
         writeln("Thank you for using our vending machine!");
         writeln("Ba-bye, see you soon!");
     }
