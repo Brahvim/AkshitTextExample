@@ -1,21 +1,38 @@
-#include "Header.h"
+#include "Main.hpp"
+
+int main(const int p_argCount, char const *p_argValues[]) {
+    sleep(500);
+    VendingMachine::welcome();
+
+prompt:
+    VendingMachine::promptForDrink();
+
+    bool success = VendingMachine::checkDrinkInput();
+
+    // Using `goto` is a bad practice! ..but only if you use it everywhere and mess up.
+    // Use it ONLY when *you are absolutely sure* it will have long-term benefits!
+    // This program is small and has an almost linear, procedural flow,
+    // so I see using `goto` as forever-beneficial and never bad:
+
+    if (!success)
+        goto prompt;
+
+    VendingMachine::sayGoodbye();
+    return 0;
+}
 
 // I'm an OOP-guy, ..sorry-not-sorry!
-//  (I'm using this `namespace` like a `class`! 🤣)
+// (I'm using this `namespace` like a `class`! 🤣)
+
+
 namespace VendingMachine {
 
-    const auto DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Brand New Milkshake" },
-        DRINKS_LIST_LOWERCASE = { "water", "cola", "lemonade", "brand new milkshake" };
-
-    // C++ sucks. Forget this:
-    // const auto DRINKS_LIST_LOWERCASE = convertToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
-
     void welcome() {
-        write("Hiya! This is a vending machine!");
+        writeln("Hiya! This is a vending machine!");
     }
 
     void promptForDrink() {
-        write("Choose your drink!:");
+        writeln("Choose your drink!:");
         writeList(VendingMachine::DRINKS_LIST_FORMATTED);
     }
 
@@ -32,7 +49,7 @@ namespace VendingMachine {
 
         convertToLowercase(chosenDrink);
 
-        // I can think of so many ways to make this 
+        // I can think of so many ways to make this
         // shorter and easier to edit, but *here we go!:*
 
         bool isAvailable;
@@ -44,18 +61,18 @@ namespace VendingMachine {
             }
 
         if (!isAvailable) {
-            write("Sorry, we don't seem to have that with us. Did you make a typo? Mind trying again?");
+            writeln("Sorry, we don't seem to have that with us. Did you make a typo? Mind trying again?");
             return false;
         }
 
-        writeWithoutLine("Here is your ");
-        write(chosenDrink);
+        write("Here is your ");
+        writeln(chosenDrink);
         return true;
     }
 
     void sayGoodbye() {
-        write("Thank you for using our vending machine!");
-        write("Ba-bye, see you soon!");
+        writeln("Thank you for using our vending machine!");
+        writeln("Ba-bye, see you soon!");
     }
 
 }

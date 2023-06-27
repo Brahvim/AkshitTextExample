@@ -2,12 +2,12 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: g++-11 build active file",
+            "label": "C/C++: g++-11 build for all files",
             "command": "/usr/bin/g++-11",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "${workspaceFolder}/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

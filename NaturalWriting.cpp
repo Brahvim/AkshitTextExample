@@ -1,4 +1,6 @@
-#include "Header.h"
+#include "NaturalWriting.hpp"
+
+extern void sleep(const long);
 
 namespace Speed {
 
@@ -12,9 +14,9 @@ namespace Speed {
     namespace {
         struct ForeverUnusedInitializerStruct {
             ForeverUnusedInitializerStruct() {
-                // TODO: FIX THIS.
-                // print(std::vector<std::string>({ "A","B" }));
                 Speed::reset();
+                std::cout << "yo.";
+                // write("yo.");
             }
 
             ~ForeverUnusedInitializerStruct() {
@@ -22,14 +24,6 @@ namespace Speed {
             }
         } foreverUnusedInstance;
     };
-
-
-    const long ORIGINAL_WRITING_DELAY = 50;
-
-    // This `static` limits these variables to this
-    // "translation unit" (`.h` and `.cpp` combination.)
-
-    /* static */ long LETTER, COMMA, FULLSTOP, EXCLAIM;
 
     void reset() {
         LETTER = ORIGINAL_WRITING_DELAY;
@@ -47,28 +41,17 @@ namespace Speed {
 
 }
 
-void sleep(const long p_time) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(p_time));
-}
-
 // template <typename PrintElementT, typename... VarArgs>
 // void write(const PrintElementT p_toPrint, const VarArgs... p_args) {
 //     writeImpl(p_toPrint);
 //     writeImpl(p_args...);
 // }
 
-template <typename PrintElementT>
-void write(const PrintElementT& p_element) {
-    writeWithoutLine(p_element);
-    std::cout << std::endl;
+void write(const char * p_str) {
+    write(std::string(p_str));
 }
 
-template <typename PrintElementT>
-void writeWithoutLine(const PrintElementT& p_element) {
-    writeString(convertToString(p_element));
-}
-
-void writeString(const std::string& p_str) {
+void write(const std::string& p_str) {
     char c;
     const unsigned int length = p_str.length();
     for (unsigned int i = 0; i < length; i++) {
@@ -98,10 +81,65 @@ void writeString(const std::string& p_str) {
 }
 
 template <typename PrintElementT>
-void writeList(const std::initializer_list<PrintElementT> p_listItems) {
+void write(const PrintElementT& p_element) {
+    write(convertToString(p_element));
+}
+
+void writeln(const char * p_str) {
+    write(std::string(p_str));
+}
+
+void writeln(const std::string& p_str) {
+    char c;
+    const unsigned int length = p_str.length();
+    for (unsigned int i = 0; i < length; i++) {
+        using namespace std;
+
+        c = p_str.at(i);
+        cout << c;
+        cout.flush();
+
+        using namespace Speed;
+
+        // Sleep for some time, based on the character encountered:
+        switch (c) {
+        case ',':
+            sleep(COMMA);
+            break;
+        case '.':
+            sleep(FULLSTOP);
+            break;
+        case '!':
+            sleep(EXCLAIM);
+            break;
+        default:
+            sleep(LETTER);
+        }
+    }
+}
+
+template <typename PrintElementT>
+void writeln(const PrintElementT& p_element) {
+    write(convertToString(p_element));
+}
+
+
+template <typename PrintElementT>
+void writeList(const std::vector<PrintElementT>& p_list) {
     unsigned long long counter = 1;
 
-    for (auto const i : p_listItems) {
+    for (auto const i : p_list) {
+        std::cout << counter++ << ". ";
+        write(i);
+        sleep(Speed::FULLSTOP);
+    }
+}
+
+template <typename PrintElementT>
+void writeList(const std::initializer_list<PrintElementT>& p_list) {
+    unsigned long long counter = 1;
+
+    for (auto const i : p_list) {
         std::cout << counter++ << ". ";
         write(i);
         sleep(Speed::FULLSTOP);
