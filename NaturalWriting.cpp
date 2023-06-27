@@ -2,7 +2,11 @@
 
 extern void sleep(const long);
 
-namespace Speed {
+// Bad naming alert!
+// Generally, if you have an `enum`, or something like one, you never name it in plural!
+// I'm doing it this time because I can, haha!
+
+namespace Speeds {
 
     // This *is* a bad practice, by the way!
     // What this "anonymous `namespace`" does, is that it
@@ -14,7 +18,7 @@ namespace Speed {
     namespace {
         struct ForeverUnusedInitializerStruct {
             ForeverUnusedInitializerStruct(void) {
-                Speed::reset();
+                Speeds::reset();
             }
 
             ~ForeverUnusedInitializerStruct(void) {
@@ -24,22 +28,19 @@ namespace Speed {
     };
 
     void reset(void) {
-        Speed::LETTER = Speed::ORIGINAL_WRITING_DELAY;
-        Speed::COMMA = 4 * Speed::LETTER;
-        Speed::FULLSTOP = 10 * Speed::LETTER;
-        Speed::EXCLAIM = 6 * Speed::LETTER;
+        Speeds::setSpeeds(Speeds::DEFAULT_SPEEDS);
     }
 
-    void setDelay(const long p_to) {
-        Speed::LETTER = p_to;
-        Speed::COMMA = p_to * 4.0f;
-        Speed::FULLSTOP = p_to * 10.0f;
-        Speed::EXCLAIM = p_to * 6.0f;
+    void setSpeeds(const unsigned long p_to) {
+        Speeds::LETTER = p_to;
+        Speeds::COMMA = p_to * 4;
+        Speeds::FULLSTOP = p_to * 10;
+        Speeds::QUESTION = Speeds::EXCLAIM = p_to * 6;
     }
 
 }
 
-#pragma region // `writeList()` overloads.
+#pragma region // `write()` overloads.
 void write(const char * p_str) {
     write(std::string(p_str));
 }
@@ -65,29 +66,33 @@ void write(const std::string& p_str) {
         cout << c;
         cout.flush();
 
-        using namespace Speed;
+        using namespace Speeds;
 
         // Sleep for some time, based on the character encountered:
         switch (c) {
         case ',':
-            sleep(COMMA);
+            sleep(Speeds::COMMA);
             break;
 
         case '.':
-            sleep(FULLSTOP);
+            sleep(Speeds::FULLSTOP);
             break;
 
         case '\n': // If we're writing on a new line after finishing a sentence, why wait more?!
             if (p != '.')
-                sleep(FULLSTOP);
+                sleep(Speeds::FULLSTOP);
             break;
 
         case '!':
-            sleep(EXCLAIM);
+            sleep(Speeds::EXCLAIM);
+            break;
+
+        case '?':
+            sleep(Speeds::QUESTION);
             break;
 
         default:
-            sleep(LETTER);
+            sleep(Speeds::LETTER);
         }
 
         p = c;
@@ -124,7 +129,7 @@ template <typename PrintElementT>
 static void writeListLoopImpl(const PrintElementT& p_element, const int p_counter) {
     std::cout << p_counter << ". ";
     writeln(p_element);
-    sleep(Speed::FULLSTOP);
+    sleep(Speeds::FULLSTOP);
 }
 
 #pragma region // `writeList(const std::vector<*>)` overloads.

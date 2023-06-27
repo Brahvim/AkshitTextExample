@@ -7,9 +7,10 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                "-O0",
                 "${workspaceFolder}/*.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/App"
             ],
             "options": {
                 "cwd": "${fileDirname}"

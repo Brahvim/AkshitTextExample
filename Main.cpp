@@ -1,5 +1,5 @@
+#include <map>
 #include "Main.hpp"
-#define DEBUG // Makes text go brrrrr!
 
 int main(const int p_argCount, char const *p_argValues[]) {
     sleep(500);
@@ -60,11 +60,11 @@ namespace VendingMachine {
     }
 
     void writeDrinksList(void) {
-        writeList(VendingMachine::DRINK_NUMBERS);
+        writeList(VendingMachine::DRINKS_LIST_FORMATTED);
     }
 
     void printDrinksList(void) {
-        printList(VendingMachine::DRINK_NUMBERS);
+        printList(VendingMachine::DRINKS_LIST_FORMATTED);
     }
 
     int checkDrinkInput(void) {
@@ -72,27 +72,67 @@ namespace VendingMachine {
         std::getline(std::cin, input);
 
         bool isNumber = false;
-        int drinkId = VendingMachine::getDrinkFromNumericalSymbol(input, isNumber); // Was the drink ID passed in?
+        // Was the drink ID passed in as number as a symbol? (`1`, `2`, et cetera)?
+        int drinkId = VendingMachine::getDrinkFromNumericalSymbol(input, isNumber);
         if (isNumber)
             return drinkId;
 
-        // If that didn't work out, we continue to check the string!:
-
         // Convert `input` to lowercase so we can easily compare it against other strings:
-        convertToLowercase(input); // PS Feel free to borrow/explore this ("these") function[s]!
+        StringUtils::convertToLowercase(input); // PS Feel free to borrow/explore this ("these") function[s]!
 
+        // So! If that didn't work out, we continue to check the string for words-numbers!:
+        // Was the drink ID passed in as number's name'? ("one", "two", et cetera)?
+        drinkId = VendingMachine::getDrinkFromNumberName(input);
+        // If it was a valid number-name, we return the ID it refers to!:
+        if (drinkId != -1)
+            return drinkId;
+
+        // If that didn't work out, we continue to check the string for drink names!:
         // ...Now, we check it against each string in our list of drinks:
-        for (int i = 0; i < VendingMachine::NUM_DRINKS; i++)
-            if (VendingMachine::DRINKS_LIST_LOWERCASE.at(i) == input)
-                return i; // If one of the names is exactly what the user entered, we return its ID.
 
-        // ...Else we just report that the user wants a drink we don't have. Sad.
-        return -1;
+        std::map<int, int> drinkIdToMatchedTokensMap;
+        std::vector<std::string> inputTokens = StringUtils::splitStringBySpaces(input);
+
+        // Find how many tokens from the input match each drink's name's tokens:
+        for (int i = 0; i < VendingMachine::NUM_DRINKS; i++) {
+            int numMatchedTokens; // Get tokens in drink name:
+            const std::vector drinkTokens = VendingMachine::DRINKS_NAMES_TOKENS.at(i);
+
+            // Match!:
+            for (auto& drTok : drinkTokens) {
+                numMatchedTokens = 0; // Re-initialize.
+
+                for (auto& inTok : inputTokens)
+                    if (drTok == inTok)
+                        numMatchedTokens++;
+
+                drinkIdToMatchedTokensMap[i] = numMatchedTokens; // Place value in the map.
+            }
+        }
+
+        // Find the ID of the drink, most tokens of which match the input:
+        int maxMatchedDrinkId = -1, maxMatches = 0;
+        for (auto &e : drinkIdToMatchedTokensMap)
+            if (e.second > maxMatches) {
+                maxMatches = e.second;
+                maxMatchedDrinkId = e.first;
+            }
+
+        return maxMatchedDrinkId;
+    }
+
+    int getDrinkFromNumberName(const std::string & p_input) {
+        for (int i = 0; i < VendingMachine::NUM_DRINKS; i++)
+            if (p_input == VendingMachine::DRINK_NUMBERS.at(i))
+                return i; // Returning the drink's ID.
+        // We DON'T subtract `1` because `std::vector`s this time, we're under the `std::vector`'s length!
+
+        return -1; // Not a real drink ID, right?
     }
 
     // `static`, therefore not visible outside this `namespace`.
     // Takes the `std::string` as a "non-`const`" reference so it can be edited.
-    int getDrinkFromNumericalSymbol(std::string& p_input, bool& p_isNumber) {
+    int getDrinkFromNumericalSymbol(std::string & p_input, bool& p_isNumber) {
         try {
             // Try converting it to an `int`:
             const int drinkId = std::stoi(p_input);
@@ -102,8 +142,7 @@ namespace VendingMachine {
             if (drinkId < 0 || drinkId > VendingMachine::NUM_DRINKS)
                 return -1; // Not a real drink ID, right?
 
-            // Return the drink's ID:
-            return drinkId - 1;
+            return drinkId - 1; // Returning the drink's ID.
             // We subtract `1` because `std::vector`s are just arrays, and start at `0`.
             // The numbers the user is given are natural ones!
         }
@@ -126,12 +165,14 @@ namespace VendingMachine {
     }
 
     void reportIncorrectInput(void) {
-        writeln("Sorry, it looks like that I don't have that drink. Did you make a typo? Mind trying again?");
+        writeln("Sorry, I didn't understand.");
+        writeln("Do I even have that drink? Maybe not?");
+        writeln("Could you please try again?");
     }
 
     void serveDrink(const int p_drinkId) {
         write("Here is your ");
-        write(VendingMachine::DRINK_NUMBERS.at(p_drinkId));
+        write(VendingMachine::DRINKS_LIST_FORMATTED.at(p_drinkId));
         writeln(". Enjoy!");
     }
 

@@ -45,18 +45,18 @@ template <typename PrintElementT>
 void writeList(const std::initializer_list<PrintElementT>&);
 #pragma endregion
 
-namespace Speed {
-#ifdef DEBUG
-    const inline long ORIGINAL_WRITING_DELAY = 10;
-#else
-    const inline long ORIGINAL_WRITING_DELAY = 50;
-#endif
+namespace Speeds {
+
+    // `inline` makes sure these are never re-defined.
+    // Saves us from random linker errors!!1!1!!
+    const inline unsigned long DEFAULT_SPEEDS = 0;
 
     // This `static` limits these variables to this
     // "translation unit" (`.h`/`.hpp` and `.cpp` combination.)
 
-    /* static */ inline long LETTER, COMMA, FULLSTOP, EXCLAIM;
+    /* static */ inline long LETTER = 0, COMMA = 0, FULLSTOP = 0, EXCLAIM = 0, QUESTION = 0;
 
     void reset(void);
-    void setDelay(const long);
+    void setSpeeds(const unsigned long);
+
 };

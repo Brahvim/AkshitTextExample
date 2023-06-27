@@ -9,26 +9,37 @@ namespace VendingMachine {
 
     const std::vector<std::string>
         DRINK_NUMBERS = { "one", "two", "three", "four" },
-        DRINK_NUMBERS = { "Water", "Cola", "Lemonade", "Brand New Milkshake" },
-        DRINKS_LIST_LOWERCASE = convertCopyToLowercase(VendingMachine::DRINK_NUMBERS);
-    const int NUM_DRINKS = VendingMachine::DRINK_NUMBERS.size();
+        DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Strawberry Milkshake" },
+        DRINKS_LIST_LOWERCASE = StringUtils::convertCopyToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
 
-    void welcome(void);
+    const int NUM_DRINKS = VendingMachine::DRINKS_LIST_FORMATTED.size();
 
-    void promptForDrink(void);
+    const std::vector<std::vector<std::string>> DRINKS_NAMES_TOKENS = []() {
+        std::vector<std::vector<std::string>> toRet;
+        toRet.reserve(VendingMachine::DRINKS_LIST_LOWERCASE.size());
+        for (auto& s : VendingMachine::DRINKS_LIST_LOWERCASE)
+            toRet.push_back(StringUtils::splitStringBySpaces(s));
+        return toRet;
+        }();
 
-    void writeDrinksList(void);
+        void welcome(void);
 
-    void printDrinksList(void);
+        void promptForDrink(void);
 
-    int checkDrinkInput(void);
+        void writeDrinksList(void);
 
-    int getDrinkFromNumericalSymbol(std::string&, bool&);
+        void printDrinksList(void);
 
-    void serveDrink(const int);
+        int checkDrinkInput(void);
 
-    void reportIncorrectInput(void);
+        int getDrinkFromNumberName(const std::string&);
 
-    void sayGoodbye(void);
+        int getDrinkFromNumericalSymbol(std::string&, bool&);
+
+        void serveDrink(const int);
+
+        void reportIncorrectInput(void);
+
+        void sayGoodbye(void);
 
 };
