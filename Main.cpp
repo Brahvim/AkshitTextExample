@@ -43,6 +43,7 @@ namespace VendingMachine {
         } foreverUnusedInstance;
     };
 
+
     void welcome(void) {
         writeln("Hiya! This is a vending machine!");
     }
