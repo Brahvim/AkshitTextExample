@@ -12,8 +12,18 @@ std::vector<PrintElementT> convertToString(const std::vector<PrintElementT>&);
 
 #pragma region // `convertToLowercase()` overloads.
 std::string convertToLowercase(std::string&);
-std::vector<std::string>& convertToLowercase(std::vector<char*>&);
-std::vector<std::string>& convertToLowercase(std::vector<std::string>&);
-std::initializer_list<std::string> convertToLowercase(std::initializer_list<std::string>&);
-std::initializer_list<const char*> convertToLowercase(std::initializer_list<char*>&);
+
+std::vector<std::string>& convertToLowercase(const std::vector<char*>&);
+
+/**
+ * @param list the vector of strings to convert the strings of, to lowercase.
+ * @return The modified vector passed in.
+ */
+std::vector<std::string>& convertToLowercase(const std::vector<std::string>&);
+
+/**
+ * @return A new vector, after copyinf and converting all string elements in the argument one, to lowercase.
+ */
+std::vector<std::string> convertCopyToLowercase(const std::vector<std::string>&);
+
 #pragma endregion

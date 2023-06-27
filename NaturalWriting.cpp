@@ -107,17 +107,17 @@ static void writeListLoopImpl(const PrintElementT& p_element, int p_counter) {
 }
 
 #pragma region // `writeList(const std::vector<*>)` overloads.
-void writeList(const std::vector<const char*>& p_list) {
+void writeList(const std::vector<const char*>& p_strList) {
     unsigned long long counter = 1;
 
-    for (auto const i : p_list)
+    for (auto const i : p_strList)
         writeListLoopImpl(i, counter);
 }
 
-void writeList(const std::vector<std::string>& p_list) {
+void writeList(const std::vector<std::string>& p_strList) {
     unsigned long long counter = 1;
 
-    for (auto const i : p_list)
+    for (auto const i : p_strList)
         writeListLoopImpl(i, counter);
 }
 
@@ -131,17 +131,17 @@ void writeList(const std::vector<PrintElementT>& p_list) {
 #pragma endregion
 
 #pragma region // `writeList(const std::initializer_list<*>)` overloads.
-void writeList(const std::initializer_list<const char*>& p_list) {
+void writeList(const std::initializer_list<const char*>& p_strList) {
     unsigned long long counter = 1;
 
-    for (auto const i : p_list)
+    for (auto const i : p_strList)
         writeListLoopImpl(i, counter);
 }
 
-void writeList(const std::initializer_list<std::string>& p_list) {
+void writeList(const std::initializer_list<std::string>& p_strList) {
     unsigned long long counter = 1;
 
-    for (auto const i : p_list)
+    for (auto const i : p_strList)
         writeListLoopImpl(i, counter);
 }
 

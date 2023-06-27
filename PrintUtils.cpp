@@ -26,17 +26,17 @@ void print(const std::initializer_list<PrintElementT>& p_list) {
 }
 
 template <typename PrintElementT>
-void printList(const std::vector<PrintElementT>& p_listItems) {
+void printList(const std::vector<PrintElementT>& p_list) {
     unsigned long long counter = 1;
 
-    for (auto const i : p_listItems)
+    for (auto const i : p_list)
         std::cout << counter++ << ". " << i << std::endl;
 }
 
 template <typename PrintElementT>
-void printList(const std::initializer_list<PrintElementT>& p_listItems) {
+void printList(const std::initializer_list<PrintElementT>& p_list) {
     unsigned long long counter = 1;
 
-    for (auto const i : p_listItems)
+    for (auto const i : p_list)
         std::cout << counter++ << ". " << i << std::endl;
 }

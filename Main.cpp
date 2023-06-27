@@ -3,19 +3,22 @@
 int main(const int p_argCount, char const *p_argValues[]) {
     sleep(500);
     VendingMachine::welcome();
-
-prompt:
     VendingMachine::promptForDrink();
+    VendingMachine::writeDrinksList(); // This *writes* them, one-bye-one.
 
-    bool success = VendingMachine::checkDrinkInput();
+    while (true) {
+        if (VendingMachine::checkDrinkInput())
+            break;
 
-    // Using `goto` is a bad practice! ..but only if you use it everywhere and mess up.
-    // Use it ONLY when *you are absolutely sure* it will have long-term benefits!
-    // This program is small and has an almost linear, procedural flow,
-    // so I see using `goto` as forever-beneficial and never bad:
+        VendingMachine::promptForDrink();
+        VendingMachine::printDrinksList(); // This *prints* them out instantly!
+    }
 
-    if (!success)
-        goto prompt;
+    // You may be wondering why I'm not calling `writeList()` or `printList()` directly.
+    // This is a principle of good design - "abstraction"; hiding away functionality and
+    // making it *seem to be easy to use* is a good way to design programs. This is because,
+    // if we ever want to change what *actually **is** happening inside*, we won't have to write
+    // *too much* code to do so. Changing what's happening inside the "abstract function" will do!
 
     VendingMachine::sayGoodbye();
     return 0;
@@ -26,38 +29,53 @@ prompt:
 
 namespace VendingMachine {
 
+    // Generally, you *should* write your own clean and clear
+    // initialization function and call it in `main()`!:
+    namespace {
+        struct ForeverUnusedInitializerStruct {
+            ForeverUnusedInitializerStruct(void) {
+
+            }
+
+            ~ForeverUnusedInitializerStruct(void) {
+                // print("Waaah!");
+            }
+        } foreverUnusedInstance;
+    };
+
+
     void welcome(void) {
         writeln("Hiya! This is a vending machine!");
     }
 
     void promptForDrink(void) {
         writeln("Choose your drink!:");
+    }
+
+    void writeDrinksList(void) {
         writeList(VendingMachine::DRINKS_LIST_FORMATTED);
+    }
+
+    void printDrinksList(void) {
+        printList(VendingMachine::DRINKS_LIST_FORMATTED);
     }
 
     bool checkDrinkInput(void) {
         std::string chosenDrink;
         std::getline(std::cin, chosenDrink);
-        // print("You chose", chosenDrink, '!'); // "Debug Laag".
+        convertToLowercase(chosenDrink); // Feel free to borrow/explore!
 
-        // https://stackoverflow.com/q/313970/
-        // This is bad, because using another language or encoding breaks it!
-        // Better, use: https://stackoverflow.com/a/24063783/
-        // std::transform(chosenDrink.begin(), chosenDrink.end(), chosenDrink.begin(),
-        //     [](unsigned char c) { return std::tolower(c); }); // Nice use of lambdas here!
+        bool isAvailable = false;
+        for (int i = 0; i < VendingMachine::NUM_DRINKS; i++) {
+            // Instead of doing this, I could've used an `std::map`.
+            const std::string& s = VendingMachine::DRINKS_LIST_LOWERCASE.at(i);
 
-        convertToLowercase(chosenDrink);
-
-        // I can think of so many ways to make this
-        // shorter and easier to edit, but *here we go!:*
-
-        bool isAvailable;
-        for (const std::string s : VendingMachine::DRINKS_LIST_LOWERCASE)
             if (s == chosenDrink) {
                 isAvailable = true;
-                chosenDrink = s;
+                chosenDrink = VendingMachine::DRINKS_LIST_FORMATTED.at(i);
                 break;
             }
+        }
 
         if (!isAvailable) {
             writeln("Sorry, we don't seem to have that with us. Did you make a typo? Mind trying again?");
@@ -65,7 +83,8 @@ namespace VendingMachine {
         }
 
         write("Here is your ");
-        writeln(chosenDrink);
+        write(chosenDrink);
+        write(". Enjoy!");
         return true;
     }
 

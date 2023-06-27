@@ -7,9 +7,15 @@
 
 namespace VendingMachine {
 
-    std::vector<std::string>
+    // Why is this commented code here? See `Main.cpp:70`! (*line* `70`!)
+
+    // #include <map>
+    // const std::map<std::string, std::string> DRINKS_NAME_LOWERCASE_MAP;
+
+    const std::vector<std::string>
         DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Brand New Milkshake" },
-        DRINKS_LIST_LOWERCASE = convertToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
+        DRINKS_LIST_LOWERCASE = convertCopyToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
+    const int NUM_DRINKS = VendingMachine::DRINKS_LIST_FORMATTED.size();
 
     void welcome(void);
 

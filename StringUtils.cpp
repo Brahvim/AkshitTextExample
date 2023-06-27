@@ -29,28 +29,21 @@ std::string convertToLowercase(std::string& p_str) {
     return p_str;
 }
 
-std::initializer_list<const char*> convertToLowercase(std::initializer_list<const char*>& p_strList) {
-    for (auto s : p_strList) {
-        std::string str = std::string(s);
-        convertToLowercase(str);
-    }
-
-    return p_strList;
-}
-
-// TODO: Make new vectors! Don't modify old ones!
 std::vector<std::string>& convertToLowercase(std::vector<std::string>& p_strList) {
-    for (std::string& s : p_strList)
+    for (std::string &s : p_strList) // Pass the `std::string` by reference.
         convertToLowercase(s);
 
-    return p_strList;
+    // New C++ feature :O
+    return const_cast<std::vector<std::string>&>(p_strList);
 }
 
-std::initializer_list<std::string> convertToLowercase(
-    std::initializer_list<std::string>& p_strList) {
-    for (std::string s : p_strList)
-        convertToLowercase(s);
+std::vector<std::string> convertCopyToLowercase(const std::vector<std::string>& p_strList) {
+    auto toRet = std::vector<std::string>{}; // Create a new `std::vector` to hold the `std::string`s.
+    toRet.reserve(p_strList.size()); // Reserve memory. #SpeedFtw!
 
-    return p_strList;
+    for (std::string s : p_strList) // Send a copy of the `std::string`.
+        toRet.push_back(convertToLowercase(s));
+
+    return toRet;
 }
 #pragma endregion
