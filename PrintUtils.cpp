@@ -25,6 +25,13 @@ void print(const std::initializer_list<PrintElementT>& p_list) {
         std::cout << i << std::endl;
 }
 
+void printList(const std::vector<std::string>& p_strList) {
+    unsigned long long counter = 1;
+
+    for (auto const i : p_strList)
+        std::cout << counter++ << ". " << i << std::endl;
+}
+
 template <typename PrintElementT>
 void printList(const std::vector<PrintElementT>& p_list) {
     unsigned long long counter = 1;

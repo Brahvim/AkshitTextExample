@@ -45,7 +45,18 @@ void write(const char * p_str) {
 }
 
 void write(const std::string& p_str) {
+    // Current `char` of the string :>
     char c;
+
+    // Previous character in the string.
+    int p = INT32_MIN;
+
+    // `int` because, ..if it was a `char`, there would be a chance,
+    // that the random value it got due to remaining un-initialized
+    // could interfere with the `switch` below!
+    // Therefore, I initialize it with a custom value that I know 
+    // the `switch` does not check for, in this manner.
+
     const unsigned int length = p_str.length();
     for (unsigned int i = 0; i < length; i++) {
         using namespace std;
@@ -61,15 +72,25 @@ void write(const std::string& p_str) {
         case ',':
             sleep(COMMA);
             break;
+
         case '.':
             sleep(FULLSTOP);
             break;
+
+        case '\n': // If we're writing on a new line after finishing a sentence, why wait more?!
+            if (p != '.')
+                sleep(FULLSTOP);
+            break;
+
         case '!':
             sleep(EXCLAIM);
             break;
+
         default:
             sleep(LETTER);
         }
+
+        p = c;
     }
 }
 
@@ -100,57 +121,57 @@ void writeln(const PrintElementT& p_element) {
 #pragma region // `writeList()` overloads.
 // `static` makes sure nobody outside this file can sue this function!:
 template <typename PrintElementT>
-static void writeListLoopImpl(const PrintElementT& p_element, int p_counter) {
-    std::cout << p_counter++ << ". ";
+static void writeListLoopImpl(const PrintElementT& p_element, const int p_counter) {
+    std::cout << p_counter << ". ";
     writeln(p_element);
     sleep(Speed::FULLSTOP);
 }
 
 #pragma region // `writeList(const std::vector<*>)` overloads.
 void writeList(const std::vector<const char*>& p_strList) {
-    unsigned long long counter = 1;
+    unsigned long long counter = 0;
 
     for (auto const i : p_strList)
-        writeListLoopImpl(i, counter);
+        writeListLoopImpl(i, ++counter);
 }
 
 void writeList(const std::vector<std::string>& p_strList) {
-    unsigned long long counter = 1;
+    unsigned long long counter = 0;
 
     for (auto const i : p_strList)
-        writeListLoopImpl(i, counter);
+        writeListLoopImpl(i, ++counter);
 }
 
 template <typename PrintElementT>
 void writeList(const std::vector<PrintElementT>& p_list) {
-    unsigned long long counter = 1;
+    unsigned long long counter = 0;
 
     for (auto const i : p_list)
-        writeListLoopImpl(i, counter);
+        writeListLoopImpl(i, ++counter);
 }
 #pragma endregion
 
 #pragma region // `writeList(const std::initializer_list<*>)` overloads.
-void writeList(const std::initializer_list<const char*>& p_strList) {
-    unsigned long long counter = 1;
+void writeList(const std::initializer_list<const char*>&p_strList) {
+    unsigned long long counter = 0;
 
     for (auto const i : p_strList)
-        writeListLoopImpl(i, counter);
+        writeListLoopImpl(i, ++counter);
 }
 
-void writeList(const std::initializer_list<std::string>& p_strList) {
-    unsigned long long counter = 1;
+void writeList(const std::initializer_list<std::string>&p_strList) {
+    unsigned long long counter = 0;
 
     for (auto const i : p_strList)
-        writeListLoopImpl(i, counter);
+        writeListLoopImpl(i, ++counter);
 }
 
 template <typename PrintElementT>
-void writeList(const std::initializer_list<PrintElementT>& p_list) {
-    unsigned long long counter = 1;
+void writeList(const std::initializer_list<PrintElementT>&p_list) {
+    unsigned long long counter = 0;
 
     for (auto const i : p_list)
-        writeListLoopImpl(i, counter);
+        writeListLoopImpl(i, ++counter);
 }
 
 #pragma endregion

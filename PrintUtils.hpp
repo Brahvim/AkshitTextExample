@@ -23,6 +23,8 @@ void print(const std::initializer_list<PrintElementT>&);
 // Could use recursion here, but I ain't got time for dealing with that mess!
 // Better use an `std::vector` or `std::initializer_list`!
 // And so, we have these `printList()` overloads:
+void printList(const std::vector<std::string>&);
+
 template <typename PrintElementT>
 void printList(const std::vector<PrintElementT>&);
 

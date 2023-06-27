@@ -46,7 +46,11 @@ void writeList(const std::initializer_list<PrintElementT>&);
 #pragma endregion
 
 namespace Speed {
+#ifdef DEBUG
+    const inline long ORIGINAL_WRITING_DELAY = 10;
+#else
     const inline long ORIGINAL_WRITING_DELAY = 50;
+#endif
 
     // This `static` limits these variables to this
     // "translation unit" (`.h`/`.hpp` and `.cpp` combination.)

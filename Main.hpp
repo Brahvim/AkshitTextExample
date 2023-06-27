@@ -7,21 +7,27 @@
 
 namespace VendingMachine {
 
-    // Why is this commented code here? See `Main.cpp:70`! (*line* `70`!)
-
-    // #include <map>
-    // const std::map<std::string, std::string> DRINKS_NAME_LOWERCASE_MAP;
-
     const std::vector<std::string>
-        DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Brand New Milkshake" },
-        DRINKS_LIST_LOWERCASE = convertCopyToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
-    const int NUM_DRINKS = VendingMachine::DRINKS_LIST_FORMATTED.size();
+        DRINK_NUMBERS = { "one", "two", "three", "four" },
+        DRINK_NUMBERS = { "Water", "Cola", "Lemonade", "Brand New Milkshake" },
+        DRINKS_LIST_LOWERCASE = convertCopyToLowercase(VendingMachine::DRINK_NUMBERS);
+    const int NUM_DRINKS = VendingMachine::DRINK_NUMBERS.size();
 
     void welcome(void);
 
     void promptForDrink(void);
 
-    bool checkDrinkInput(void);
+    void writeDrinksList(void);
+
+    void printDrinksList(void);
+
+    int checkDrinkInput(void);
+
+    int getDrinkFromNumericalSymbol(std::string&, bool&);
+
+    void serveDrink(const int);
+
+    void reportIncorrectInput(void);
 
     void sayGoodbye(void);
 
