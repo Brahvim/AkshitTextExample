@@ -1,9 +1,7 @@
 #pragma once
-#include <chrono>
-
-#include "StringUtils.hpp"
 #include "PrintUtils.hpp"
-#include "NaturalWriting.hpp"
+#include "StringUtils.hpp"
+#include "NaturalWriter.hpp"
 
 namespace VendingMachine {
 

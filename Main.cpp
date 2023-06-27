@@ -21,7 +21,7 @@ int main(const int p_argCount, char const *p_argValues[]) {
         VendingMachine::printDrinksList(); // This *prints* them out instantly!
     }
 
-    // You may be wondering why I'm not calling `writeList()` or `printList()` directly.
+    // You may be wondering why I'm not calling `NaturalWriter::writeList()` or `PrintUtils::printList()` directly.
     // This is a principle of good design - "abstraction"; hiding away functionality and
     // making it *seem to be easy to use* is a good way to design programs. This is because,
     // if we ever want to change what *actually **is** happening inside*, we won't have to write
@@ -45,25 +45,25 @@ namespace VendingMachine {
             }
 
             ~ForeverUnusedInitializerStruct(void) {
-                // print("Waaah!");
+                // PrintUtils::print("Waaah!");
             }
         } foreverUnusedInstance;
     };
 
     void welcome(void) {
-        writeln("Hiya! This is a vending machine!");
+        NaturalWriter::writeln("Hiya! This is a vending machine!");
     }
 
     void promptForDrink(void) {
-        writeln("Choose your drink!:");
+        NaturalWriter::writeln("Choose your drink!:");
     }
 
     void writeDrinksList(void) {
-        writeList(VendingMachine::DRINKS_LIST_FORMATTED);
+        NaturalWriter::writeList(VendingMachine::DRINKS_LIST_FORMATTED);
     }
 
     void printDrinksList(void) {
-        printList(VendingMachine::DRINKS_LIST_FORMATTED);
+        PrintUtils::printList(VendingMachine::DRINKS_LIST_FORMATTED);
     }
 
     int checkDrinkInput(void) {
@@ -102,7 +102,7 @@ namespace VendingMachine {
                 numMatchedTokens = 0; // Re-initialize.
 
                 for (auto& inTok : inputTokens)
-                    if (drTok == inTok)
+                    if (inTok.find(drTok) != std::string::npos || drTok.find(inTok) != std::string::npos)
                         numMatchedTokens++;
 
                 drinkIdToMatchedTokensMap[i] = numMatchedTokens; // Place value in the map.
@@ -164,20 +164,20 @@ namespace VendingMachine {
     }
 
     void reportIncorrectInput(void) {
-        writeln("Sorry, I didn't understand.");
-        writeln("Do I even have that drink? Maybe not?");
-        writeln("Could you please try again?");
+        NaturalWriter::writeln("Sorry, I didn't understand.");
+        NaturalWriter::writeln("Do I even have that drink? Maybe not?");
+        NaturalWriter::writeln("Could you please try again?");
     }
 
     void serveDrink(const int p_drinkId) {
-        write("Here is your ");
-        write(VendingMachine::DRINKS_LIST_FORMATTED.at(p_drinkId));
-        writeln(". Enjoy!");
+        NaturalWriter::write("Here is your ");
+        NaturalWriter::write(VendingMachine::DRINKS_LIST_FORMATTED.at(p_drinkId));
+        NaturalWriter::writeln(". Enjoy!");
     }
 
     void sayGoodbye(void) {
-        writeln("Thank you for using our vending machine!");
-        writeln("Ba-bye, see you soon!");
+        NaturalWriter::writeln("Thank you for using our vending machine!");
+        NaturalWriter::writeln("Ba-bye, see you soon!");
     }
 
 }

@@ -4,6 +4,7 @@
 #include "StringUtils.hpp"
 
 namespace StringUtils {
+
 #pragma region // `convertToString(*)` definitions:
     template <typename PrintElementT>
     std::string convertToString(const PrintElementT& p_element) {
@@ -71,4 +72,5 @@ namespace StringUtils {
 
         return toRet;
     }
+
 }
