@@ -21,7 +21,6 @@ int main(const int p_argCount, char const *p_argValues[]) {
         VendingMachine::printDrinksList(); // This *prints* them out instantly!
     }
 
-
     // You may be wondering why I'm not calling `writeList()` or `printList()` directly.
     // This is a principle of good design - "abstraction"; hiding away functionality and
     // making it *seem to be easy to use* is a good way to design programs. This is because,
