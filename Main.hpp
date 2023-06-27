@@ -17,6 +17,7 @@ namespace VendingMachine {
         toRet.reserve(VendingMachine::DRINKS_LIST_LOWERCASE.size());
         for (auto& s : VendingMachine::DRINKS_LIST_LOWERCASE)
             toRet.push_back(StringUtils::splitStringBySpaces(s));
+
         return toRet;
         }();
 

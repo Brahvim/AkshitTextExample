@@ -133,7 +133,6 @@ namespace NaturalWriter {
 #pragma endregion
 
 #pragma region // `writeList()` overloads.
-
 #pragma region // `writeList(const std::vector<*>)` overloads.
     void writeList(const std::vector<const char*>& p_strList) {
         unsigned long long counter = 0;
@@ -180,7 +179,6 @@ namespace NaturalWriter {
         for (auto const i : p_list)
             writeListLoopImpl(i, ++counter);
     }
-
 #pragma endregion
 #pragma endregion
 }

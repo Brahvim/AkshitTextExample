@@ -36,20 +36,6 @@ int main(const int p_argCount, char const *p_argValues[]) {
 
 namespace VendingMachine {
 
-    // Generally, you *should* write your own clean and clear
-    // initialization function and call it in `main()`!:
-    namespace {
-        struct ForeverUnusedInitializerStruct {
-            ForeverUnusedInitializerStruct(void) {
-
-            }
-
-            ~ForeverUnusedInitializerStruct(void) {
-                // PrintUtils::print("Waaah!");
-            }
-        } foreverUnusedInstance;
-    };
-
     void welcome(void) {
         NaturalWriter::writeln("Hiya! This is a vending machine!");
     }

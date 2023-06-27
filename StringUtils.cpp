@@ -16,6 +16,7 @@ namespace StringUtils {
         std::vector<PrintElementT> result;
         for (const auto& element : p_list)
             result.push_back(std::to_string(element));
+
         return result;
     }
 #pragma endregion
