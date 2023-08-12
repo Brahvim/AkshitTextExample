@@ -123,7 +123,7 @@ namespace VendingMachine {
             const int drinkId = std::stoi(p_input);
             p_isNumber = true; // If that didn't throw an exception, we state that the input was an `int`!
 
-            // If the drink number is wrong, we state we were unsucessful:
+            // If the drink number is wrong, we state we were unsuccessful:
             if (drinkId < 0 || drinkId > VendingMachine::NUM_DRINKS)
                 return -1; // Not a real drink ID, right?
 
