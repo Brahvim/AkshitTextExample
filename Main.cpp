@@ -83,10 +83,10 @@ namespace VendingMachine {
             const std::vector drinkTokens = VendingMachine::DRINKS_NAMES_TOKENS.at(i);
 
             // Match!:
-            for (auto& drTok : drinkTokens) {
+            for (auto &drTok : drinkTokens) {
                 numMatchedTokens = 0; // Re-initialize.
 
-                for (auto& inTok : inputTokens)
+                for (auto &inTok : inputTokens)
                     if (inTok.find(drTok) != std::string::npos || drTok.find(inTok) != std::string::npos)
                         numMatchedTokens++;
 
@@ -105,7 +105,7 @@ namespace VendingMachine {
         return maxMatchedDrinkId;
     }
 
-    int getDrinkFromNumberName(const std::string & p_input) {
+    int getDrinkFromNumberName(const std::string &p_input) {
         for (int i = 0; i < VendingMachine::NUM_DRINKS; i++)
             if (p_input == VendingMachine::DRINK_NUMBERS.at(i))
                 return i; // Returning the drink's ID.
@@ -128,12 +128,10 @@ namespace VendingMachine {
             return drinkId - 1; // Returning the drink's ID.
             // We subtract `1` because `std::vector`s are just arrays, and start at `0`.
             // The numbers the user is given are natural ones!
-        }
-        catch (const std::invalid_argument& e) {
+        } catch (const std::invalid_argument &e) {
             // If it can't be converted to a number using `std::stoi()`, return!
             return -1; // Not a real drink ID, right?
-        }
-        catch (const std::out_of_range& e) {
+        } catch (const std::out_of_range &e) {
             // This exception is thrown by `std::vector::at` when we access an ID not in the vector,
             // and also by `std::stoi()` when the number is too large or small to be an `int`.
             // ...we just return in either case:
