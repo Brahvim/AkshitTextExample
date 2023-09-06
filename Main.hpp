@@ -33,7 +33,7 @@ namespace VendingMachine {
 
         int getDrinkFromNumberName(const std::string&);
 
-        int getDrinkFromNumericalSymbol(std::string&, bool&);
+        int getDrinkFromNumericalSymbol(std::string&);
 
         void serveDrink(const int);
 

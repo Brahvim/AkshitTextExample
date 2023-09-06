@@ -56,10 +56,9 @@ namespace VendingMachine {
         std::string input;
         std::getline(std::cin, input);
 
-        bool isNumber = false;
         // Was the drink ID passed in as number as a symbol? (`1`, `2`, et cetera)?
-        int drinkId = VendingMachine::getDrinkFromNumericalSymbol(input, isNumber);
-        if (isNumber)
+        int drinkId = VendingMachine::getDrinkFromNumericalSymbol(input);
+        if (drinkId > 0)
             return drinkId;
 
         // Convert `input` to lowercase so we can easily compare it against other strings:
@@ -69,7 +68,7 @@ namespace VendingMachine {
         // Was the drink ID passed in as number's name'? ("one", "two", et cetera)?
         drinkId = VendingMachine::getDrinkFromNumberName(input);
         // If it was a valid number-name, we return the ID it refers to!:
-        if (drinkId != -1)
+        if (drinkId > 0)
             return drinkId;
 
         // If that didn't work out, we continue to check the string for drink names!:
@@ -117,11 +116,10 @@ namespace VendingMachine {
 
     // `static`, therefore not visible outside this `namespace`.
     // Takes the `std::string` as a "non-`const`" reference so it can be edited.
-    int getDrinkFromNumericalSymbol(std::string & p_input, bool& p_isNumber) {
+    int getDrinkFromNumericalSymbol(std::string &p_input) {
         try {
             // Try converting it to an `int`:
             const int drinkId = std::stoi(p_input);
-            p_isNumber = true; // If that didn't throw an exception, we state that the input was an `int`!
 
             // If the drink number is wrong, we state we were unsuccessful:
             if (drinkId < 0 || drinkId > VendingMachine::NUM_DRINKS)
@@ -133,19 +131,16 @@ namespace VendingMachine {
         }
         catch (const std::invalid_argument& e) {
             // If it can't be converted to a number using `std::stoi()`, return!
-            p_isNumber = false;
             return -1; // Not a real drink ID, right?
         }
         catch (const std::out_of_range& e) {
             // This exception is thrown by `std::vector::at` when we access an ID not in the vector,
             // and also by `std::stoi()` when the number is too large or small to be an `int`.
             // ...we just return in either case:
-            p_isNumber = false;
             return -1; // Not a real drink ID, right?
         }
 
         // If for some reason, something we don't know happens, we state we were unsuccessful:
-        p_isNumber = false;
         return -1; // Not a real drink ID, right?
     }
 

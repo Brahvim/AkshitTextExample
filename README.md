@@ -1,5 +1,5 @@
 # AkshitTextExample
-A C++ project I did in ~`20`+ hours to show a *beginnner* friend how he could go about rewriting his program.
+A C++ project I did in ~`20`+ hours to show a *beginner* friend how he could go about rewriting his program.
 
 Nicely organized! *...procedural code*, ..yeah. Using pure functions wherever possible, though.
 
