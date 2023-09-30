@@ -80,7 +80,7 @@ namespace VendingMachine {
         // Find how many tokens from the input match each drink's name's tokens:
         for (int i = 0; i < VendingMachine::NUM_DRINKS; i++) {
             int numMatchedTokens; // Get tokens in drink name:
-            const std::vector drinkTokens = VendingMachine::DRINKS_NAMES_TOKENS.at(i);
+            const std::vector<std::string> drinkTokens = VendingMachine::DRINKS_NAMES_TOKENS.at(i);
 
             // Match!:
             for (auto &drTok : drinkTokens) {

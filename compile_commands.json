@@ -1,0 +1,58 @@
+[
+    {
+        "arguments": [
+            "/usr/bin/g++-11",
+            "-c",
+            "-fdiagnostics-color=always",
+            "-g",
+            "-o",
+            "/home/brahvim/Code/C++/AkshitTextExample/App",
+            "/home/brahvim/Code/C++/AkshitTextExample/Main.cpp"
+        ],
+        "directory": "/home/brahvim/Code/C++/AkshitTextExample",
+        "file": "/home/brahvim/Code/C++/AkshitTextExample/Main.cpp",
+        "output": "/home/brahvim/Code/C++/AkshitTextExample/App"
+    },
+    {
+        "arguments": [
+            "/usr/bin/g++-11",
+            "-c",
+            "-fdiagnostics-color=always",
+            "-g",
+            "-o",
+            "/home/brahvim/Code/C++/AkshitTextExample/App",
+            "/home/brahvim/Code/C++/AkshitTextExample/NaturalWriter.cpp"
+        ],
+        "directory": "/home/brahvim/Code/C++/AkshitTextExample",
+        "file": "/home/brahvim/Code/C++/AkshitTextExample/NaturalWriter.cpp",
+        "output": "/home/brahvim/Code/C++/AkshitTextExample/App"
+    },
+    {
+        "arguments": [
+            "/usr/bin/g++-11",
+            "-c",
+            "-fdiagnostics-color=always",
+            "-g",
+            "-o",
+            "/home/brahvim/Code/C++/AkshitTextExample/App",
+            "/home/brahvim/Code/C++/AkshitTextExample/PrintUtils.cpp"
+        ],
+        "directory": "/home/brahvim/Code/C++/AkshitTextExample",
+        "file": "/home/brahvim/Code/C++/AkshitTextExample/PrintUtils.cpp",
+        "output": "/home/brahvim/Code/C++/AkshitTextExample/App"
+    },
+    {
+        "arguments": [
+            "/usr/bin/g++-11",
+            "-c",
+            "-fdiagnostics-color=always",
+            "-g",
+            "-o",
+            "/home/brahvim/Code/C++/AkshitTextExample/App",
+            "/home/brahvim/Code/C++/AkshitTextExample/StringUtils.cpp"
+        ],
+        "directory": "/home/brahvim/Code/C++/AkshitTextExample",
+        "file": "/home/brahvim/Code/C++/AkshitTextExample/StringUtils.cpp",
+        "output": "/home/brahvim/Code/C++/AkshitTextExample/App"
+    }
+]
