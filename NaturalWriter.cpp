@@ -1,6 +1,6 @@
 #include "NaturalWriter.hpp"
 
-void sleep(const long p_time) { std::this_thread::sleep_for(std::chrono::milliseconds(p_time)); }
+void millisSleep(const unsigned long long p_time) { std::this_thread::sleep_for(std::chrono::milliseconds(p_time)); }
 
 // Bad naming alert!
 // Generally, if you have an `enum`, or something like one, you never name it in plural!
@@ -16,22 +16,22 @@ namespace Speeds {
     // Generally, you *should* write your own clean and clear
     // initialization function and call it in `main()`!:
     namespace {
-        struct ForeverUnusedInitializerStruct {
+        const struct ForeverUnusedInitializerStruct {
             ForeverUnusedInitializerStruct(void) {
                 Speeds::reset();
             }
 
-            ~ForeverUnusedInitializerStruct(void) {
-                // PrintUtils::print("Waaah!");
-            }
+            // ~ForeverUnusedInitializerStruct(void) {
+            //     PrintUtils::print("Waaah!");
+            // }
         } foreverUnusedInstance;
     };
 
     void reset(void) {
-        Speeds::setSpeeds(Speeds::DEFAULT_SPEEDS);
+        Speeds::setSpeeds(Speeds::DEFAULT_SPEEDS_FACTOR);
     }
 
-    void setSpeeds(const unsigned long p_to) {
+    void setSpeeds(const size_t p_to) {
         Speeds::LETTER = p_to;
         Speeds::COMMA = p_to * 4;
         Speeds::FULLSTOP = p_to * 10;
@@ -42,19 +42,19 @@ namespace Speeds {
 
 // `static` makes sure nobody outside this file can sue this function!:
 template <typename PrintElementT>
-static void writeListLoopImpl(const PrintElementT& p_element, const int p_counter) {
+static void writeListLoopImpl(const PrintElementT &p_element, const size_t p_counter) {
     std::cout << p_counter << ". ";
     NaturalWriter::writeln(p_element);
-    sleep(Speeds::FULLSTOP);
+    millisSleep(Speeds::FULLSTOP);
 }
 
 namespace NaturalWriter {
 #pragma region // `WriteUtils::write()` overloads.
-    void write(const char * p_str) {
+    void write(const char *p_str) {
         NaturalWriter::write(std::string(p_str));
     }
 
-    void write(const std::string& p_str) {
+    void write(const std::string &p_str) {
         // Current `char` of the string :>
         char c;
 
@@ -67,41 +67,37 @@ namespace NaturalWriter {
         // Therefore, I initialize it with a custom value that I know 
         // the `switch` does not check for, in this manner.
 
-        const unsigned int length = p_str.length();
+        const size_t length = p_str.length();
         for (unsigned int i = 0; i < length; i++) {
-            using namespace std;
-
             c = p_str.at(i);
-            cout << c;
-            cout.flush();
-
-            using namespace Speeds;
+            std::cout << c;
+            std::cout.flush();
 
             // Sleep for some time, based on the character encountered:
             switch (c) {
-            case ',':
-                sleep(Speeds::COMMA);
+                case ',':
+                millisSleep(Speeds::COMMA);
                 break;
 
-            case '.':
-                sleep(Speeds::FULLSTOP);
+                case '.':
+                millisSleep(Speeds::FULLSTOP);
                 break;
 
-            case '\n': // If we're writing on a new line after finishing a sentence, why wait more?!
+                case '\n': // If we're writing on a new line after finishing a sentence, why wait more?!
                 if (p != '.')
-                    sleep(Speeds::FULLSTOP);
+                    millisSleep(Speeds::FULLSTOP);
                 break;
 
-            case '!':
-                sleep(Speeds::EXCLAIM);
+                case '!':
+                millisSleep(Speeds::EXCLAIM);
                 break;
 
-            case '?':
-                sleep(Speeds::QUESTION);
+                case '?':
+                millisSleep(Speeds::QUESTION);
                 break;
 
-            default:
-                sleep(Speeds::LETTER);
+                default:
+                millisSleep(Speeds::LETTER);
             }
 
             p = c;
@@ -109,24 +105,24 @@ namespace NaturalWriter {
     }
 
     template <typename PrintElementT>
-    void write(const PrintElementT& p_element) {
+    void write(const PrintElementT &p_element) {
         NaturalWriter::write(convertToString(p_element));
     }
 #pragma endregion
 
 #pragma region // `writeln()` overloads.
-    void writeln(const char * p_str) {
+    void writeln(const char *p_str) {
         NaturalWriter::write(std::string(p_str));
         std::cout << std::endl;
     }
 
-    void writeln(const std::string& p_str) {
+    void writeln(const std::string &p_str) {
         NaturalWriter::write(p_str);
         std::cout << std::endl;
     }
 
     template <typename PrintElementT>
-    void writeln(const PrintElementT& p_element) {
+    void writeln(const PrintElementT &p_element) {
         NaturalWriter::write(convertToString(p_element));
         std::cout << std::endl;
     }
@@ -134,22 +130,22 @@ namespace NaturalWriter {
 
 #pragma region // `writeList()` overloads.
 #pragma region // `writeList(const std::vector<*>)` overloads.
-    void writeList(const std::vector<const char*>& p_strList) {
-        unsigned long long counter = 0;
+    void writeList(const std::vector<const char *> &p_strList) {
+        size_t counter = 0;
 
         for (auto const i : p_strList)
             writeListLoopImpl(i, ++counter);
     }
 
-    void writeList(const std::vector<std::string>& p_strList) {
+    void writeList(const std::vector<std::string> &p_strList) {
         unsigned long long counter = 0;
 
-        for (auto const i : p_strList)
+        for (auto &i : p_strList)
             writeListLoopImpl(i, ++counter);
     }
 
     template <typename PrintElementT>
-    void writeList(const std::vector<PrintElementT>& p_list) {
+    void writeList(const std::vector<PrintElementT> &p_list) {
         unsigned long long counter = 0;
 
         for (auto const i : p_list)
@@ -158,22 +154,22 @@ namespace NaturalWriter {
 #pragma endregion
 
 #pragma region // `writeList(const std::initializer_list<*>)` overloads.
-    void writeList(const std::initializer_list<const char*>&p_strList) {
+    void writeList(const std::initializer_list<const char *> &p_strList) {
         unsigned long long counter = 0;
 
         for (auto const i : p_strList)
             writeListLoopImpl(i, ++counter);
     }
 
-    void writeList(const std::initializer_list<std::string>&p_strList) {
+    void writeList(const std::initializer_list<std::string> &p_strList) {
         unsigned long long counter = 0;
 
-        for (auto const i : p_strList)
+        for (auto &i : p_strList)
             writeListLoopImpl(i, ++counter);
     }
 
     template <typename PrintElementT>
-    void writeList(const std::initializer_list<PrintElementT>&p_list) {
+    void writeList(const std::initializer_list<PrintElementT> &p_list) {
         unsigned long long counter = 0;
 
         for (auto const i : p_list)

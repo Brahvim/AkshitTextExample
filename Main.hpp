@@ -5,40 +5,43 @@
 
 namespace VendingMachine {
 
-    const std::vector<std::string>
-        DRINK_NUMBERS = { "one", "two", "three", "four" },
-        DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Strawberry Milkshake" },
-        DRINKS_LIST_LOWERCASE = StringUtils::convertCopyToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
+	const std::vector<std::string>
+		DRINK_NUMBERS = { "one", "two", "three", "four" },
+		DRINKS_LIST_FORMATTED = { "Water", "Cola", "Lemonade", "Strawberry Milkshake" },
+		DRINKS_LIST_LOWERCASE = StringUtils::convertCopyToLowercase(VendingMachine::DRINKS_LIST_FORMATTED);
 
-    const int NUM_DRINKS = VendingMachine::DRINKS_LIST_FORMATTED.size();
+	const size_t NUM_DRINKS = VendingMachine::DRINKS_LIST_FORMATTED.size();
 
-    const std::vector<std::vector<std::string>> DRINKS_NAMES_TOKENS = []() {
-        std::vector<std::vector<std::string>> toRet;
-        toRet.reserve(VendingMachine::DRINKS_LIST_LOWERCASE.size());
-        for (auto& s : VendingMachine::DRINKS_LIST_LOWERCASE)
-            toRet.push_back(StringUtils::splitStringBySpaces(s));
+	const std::vector<std::vector<std::string>> DRINKS_NAMES_TOKENS = []() {
+		std::vector<std::vector<std::string>> toRet;
+		toRet.reserve(VendingMachine::DRINKS_LIST_LOWERCASE.size());
+		for (auto &s : VendingMachine::DRINKS_LIST_LOWERCASE)
+			toRet.push_back(StringUtils::splitStringBySpaces(s));
 
-        return toRet;
-        }();
+		return toRet;
+	}();
 
-        void welcome(void);
 
-        void promptForDrink(void);
+	void welcome(void);
 
-        void writeDrinksList(void);
+	void promptForDrink(void);
 
-        void printDrinksList(void);
+	void writeDrinksList(void);
 
-        int checkDrinkInput(void);
+	void printDrinksList(void);
 
-        int getDrinkFromNumberName(const std::string&);
+	std::string getUserInputLine();
 
-        int getDrinkFromNumericalSymbol(std::string&);
+	int checkDrinkInput(void);
 
-        void serveDrink(const int);
+	int getDrinkFromNumberName(const std::string_view);
 
-        void reportIncorrectInput(void);
+	int getDrinkFromNumericalSymbol(const std::string &);
 
-        void sayGoodbye(void);
+	void serveDrink(const int);
+
+	void reportIncorrectInput(void);
+
+	void sayGoodbye(void);
 
 };

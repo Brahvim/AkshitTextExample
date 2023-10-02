@@ -1,5 +1,8 @@
 {
     "files.associations": {
+        "*.s": "asm-intel-x86-generic",
+        "*.asm": "asm-intel-x86-generic",
+        "*.luac": "lua",
         "iostream": "cpp",
         "initializer_list": "cpp",
         "array": "cpp",
@@ -51,10 +54,13 @@
         "thread": "cpp",
         "typeinfo": "cpp",
         "sstream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "cstring": "cpp",
+        "cinttypes": "cpp"
     },
     "cSpell.words": [
-        "Akshit"
+        "Akshit",
+        "fdiagnostics"
     ],
     // #region VC-Format settings from my VS `.editorconfig` thanks to ChatGPT!
     "C_Cpp.vcFormat.indent.braces": false,
@@ -112,5 +118,6 @@
     "C_Cpp.vcFormat.space.pointerReferenceAlignment": "right",
     "C_Cpp.vcFormat.space.aroundTernaryOperator": "insert",
     "C_Cpp.vcFormat.wrap.preserveBlocks": "allOneLineScopes",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
     // #endregion
 }
